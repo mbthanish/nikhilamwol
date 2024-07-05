@@ -8,6 +8,9 @@ import asyncio, datetime, time
 
 ACCEPTED_TEXT = "Hey {user}\n\nYour Request For {chat} Is Accepted ✅"
 START_TEXT = "Hai {}\n\nI am Auto Request Accept Bot With Working For All Channel. Add Me In Your Channel To Use"
+# button links
+BTN_ONE_LINK = 'https://t.me/+_FicYBoITVkyMzdl'
+BTN_TWO_LINK = 'https://t.me/+OLIbsBk4g2c5NmQ1'
 
 API_ID = int(env.get('API_ID'))
 API_HASH = env.get('API_HASH')
@@ -20,19 +23,21 @@ Cluster = Dbclient['Cluster0']
 Data = Cluster['users']
 Bot = Client(name='AutoAcceptBot', api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
        
-      
-     
+
+
 @Bot.on_message(filters.command("start") & filters.private)                    
 async def start_handler(c, m):
     user_id = m.from_user.id
     if not await Data.find_one({'id': user_id}): await Data.insert_one({'id': user_id})
+    ]]
     button = [[        
-        InlineKeyboardButton('Updates', url='https://t.me/+_FicYBoITVkyMzdl'),
-        InlineKeyboardButton('Movies 📁', url='https://t.me/+OLIbsBk4g2c5NmQ1')
+        InlineKeyboardButton('Updates', url=BTN_ONE_LINK),
+        InlineKeyboardButton('Movies 📁', url=BTN_TWO_LINK)
     ]]
     return await m.reply_text(text=START_TEXT.format(m.from_user.mention), disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(button))
+          
 
-
+@Bot.on_message(filters.command(["broadcast", "users"]) & filters.user(ADMINS))  
 async def broadcast(c, m):
     if m.text == "/users":
         total_users = await Data.count_documents({})
@@ -85,6 +90,3 @@ async def req_accept(c, m):
    
 
 Bot.run()
-
-
-

@@ -29,7 +29,6 @@ Bot = Client(name='AutoAcceptBot', api_id=API_ID, api_hash=API_HASH, bot_token=B
 async def start_handler(c, m):
     user_id = m.from_user.id
     if not await Data.find_one({'id': user_id}): await Data.insert_one({'id': user_id})
-    ]]
     button = [[        
         InlineKeyboardButton('Updates', url=BTN_ONE_LINK),
         InlineKeyboardButton('Movies 📁', url=BTN_TWO_LINK)

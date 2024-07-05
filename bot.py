@@ -31,7 +31,6 @@ async def start_handler(c, m):
         InlineKeyboardButton('Movies 📁', url='https://t.me/+OLIbsBk4g2c5NmQ1')
     ]]
     return await message.reply_photo(photo=random.choice(PICS), m.reply_text(text=START_TEXT.format(m.from_user.mention), disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(button))
-
 @Bot.on_message(filters.command(["broadcast", "users"]) & filters.user(ADMINS))  
 async def broadcast(c, m):
     if m.text == "/users":
